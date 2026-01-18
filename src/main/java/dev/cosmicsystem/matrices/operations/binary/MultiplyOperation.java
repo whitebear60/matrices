@@ -1,6 +1,7 @@
-package dev.cosmicsystem.matrices.operations;
+package dev.cosmicsystem.matrices.operations.binary;
 
 import dev.cosmicsystem.matrices.models.Matrix;
+import dev.cosmicsystem.matrices.models.MatrixBuilder;
 
 public class MultiplyOperation implements BaseBinaryOperation {
     @Override
@@ -9,7 +10,9 @@ public class MultiplyOperation implements BaseBinaryOperation {
             throw new IllegalArgumentException("Invalid matrix dimensions");
         }
 
-        Matrix result = new Matrix(a.getRows(), b.getCols());
+        MatrixBuilder result = Matrix.builder()
+                .rows(a.getRows())
+                .cols(b.getCols());
 
         for (int i = 0; i < a.getRows(); i++) {
             for (int j = 0; j < b.getCols(); j++) {
@@ -20,7 +23,7 @@ public class MultiplyOperation implements BaseBinaryOperation {
                 result.set(i, j, sum);
             }
         }
-        return result;
+        return result.build();
     }
 
 }

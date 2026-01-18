@@ -1,4 +1,4 @@
-package dev.cosmicsystem.matrices.operations;
+package dev.cosmicsystem.matrices.operations.binary;
 
 import dev.cosmicsystem.matrices.models.Matrix;
 

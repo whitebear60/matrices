@@ -1,6 +1,8 @@
 package dev.cosmicsystem.matrices.models;
 
-public class Matrix {
+import java.util.Arrays;
+
+public final class Matrix {
     private final int rows;
     private final int cols;
     private final double[][] data;
@@ -11,10 +13,12 @@ public class Matrix {
         this.data = new double[rows][cols];
     }
 
-    public Matrix(double[][] data) {
+    Matrix(double[][] data) {
         this.rows = data.length;
         this.cols = data[0].length;
-        this.data = data;
+        this.data = Arrays.stream(data)
+                .map(double[]::clone)
+                .toArray(double[][]::new);
     }
 
     public int getRows() {
@@ -29,7 +33,13 @@ public class Matrix {
         return data[row][col];
     }
 
-    public void set(int row, int col, double value) {
-        data[row][col] = value;
+    public double[][] toArray() {
+        return Arrays.stream(data)
+                .map(double[]::clone)
+                .toArray(double[][]::new);
+    }
+
+    public static MatrixBuilder builder() {
+        return new MatrixBuilder();
     }
 }

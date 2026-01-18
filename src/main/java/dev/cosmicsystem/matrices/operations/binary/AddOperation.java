@@ -1,6 +1,7 @@
-package dev.cosmicsystem.matrices.operations;
+package dev.cosmicsystem.matrices.operations.binary;
 
 import dev.cosmicsystem.matrices.models.Matrix;
+import dev.cosmicsystem.matrices.models.MatrixBuilder;
 
 public class AddOperation implements BaseBinaryOperation {
     @Override
@@ -9,13 +10,15 @@ public class AddOperation implements BaseBinaryOperation {
             throw new IllegalArgumentException("Matrix dimensions must match");
         }
 
-        Matrix result = new Matrix(a.getRows(), a.getCols());
+        MatrixBuilder builder = Matrix.builder()
+                .rows(a.getRows())
+                .cols(a.getCols());
 
         for (int i = 0; i < a.getRows(); i++) {
             for (int j = 0; j < a.getCols(); j++) {
-                result.set(i, j, a.get(i, j) + b.get(i, j));
+                builder.set(i, j, a.get(i, j) + b.get(i, j));
             }
         }
-        return result;
+        return builder.build();
     }
 }
