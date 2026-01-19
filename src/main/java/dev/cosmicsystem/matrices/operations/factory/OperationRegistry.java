@@ -9,38 +9,50 @@ import dev.cosmicsystem.matrices.operations.unary.TransposeOperation;
 import dev.cosmicsystem.matrices.operations.unary.UnaryOperation;
 import dev.cosmicsystem.matrices.operations.unary.UnaryScalarOperation;
 
-import java.util.EnumMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
-public final class OperationRegistry {
-    private final Map<OperationType, Supplier<UnaryOperation>> unary = new EnumMap<>(OperationType.class);
-    private final Map<OperationType, Supplier<BinaryOperation>> binary = new EnumMap<>(OperationType.class);
-    private final Map<OperationType, Supplier<UnaryScalarOperation>> scalar = new EnumMap<>(OperationType.class);
+public class OperationRegistry {
+    private final Map<String, Supplier<BinaryOperation>> binaryOps = new ConcurrentHashMap<>();
+    private final Map<String, Supplier<UnaryOperation>> unaryOps = new ConcurrentHashMap<>();
+    private final Map<String, Supplier<UnaryScalarOperation>> scalarOps = new ConcurrentHashMap<>();
+
     public OperationRegistry() {
-        unary.put(OperationType.TRANSPOSE, TransposeOperation::new);
-        scalar.put(OperationType.DETERMINANT, DeterminantOperation::new); // if you add it to enum
-
-        binary.put(OperationType.ADD, AddOperation::new);
-        binary.put(OperationType.SUBTRACT, SubtractOperation::new);
-        binary.put(OperationType.MULTIPLY, MultiplyOperation::new);
+        // Register default operations
+        registerBinary("add", AddOperation::new);
+        registerBinary("subtract", SubtractOperation::new);
+        registerBinary("multiply", MultiplyOperation::new);
+        registerUnary("transpose", TransposeOperation::new);
+        registerScalar("determinant", DeterminantOperation::new);
     }
 
-    public UnaryOperation unary(OperationType type) {
-        var supplier = unary.get(type);
-        if (supplier == null) throw new IllegalArgumentException("Unsupported unary: " + type);
-        return supplier.get();
+    // Dynamic registration methods:
+    public void registerBinary(String name, Supplier<BinaryOperation> factory) {
+        binaryOps.put(name.toLowerCase(), factory);
     }
 
-    public UnaryScalarOperation scalar(OperationType type) {
-        var supplier = scalar.get(type);
-        if (supplier == null) throw new IllegalArgumentException("Unsupported scalar: " + type);
-        return supplier.get();
+    public void registerUnary(String name, Supplier<UnaryOperation> factory) {
+        unaryOps.put(name.toLowerCase(), factory);
     }
 
-    public BinaryOperation binary(OperationType type) {
-        var supplier = binary.get(type);
-        if (supplier == null) throw new IllegalArgumentException("Unsupported binary: " + type);
-        return supplier.get();
+    public void registerScalar(String name, Supplier<UnaryScalarOperation> factory) {
+        scalarOps.put(name.toLowerCase(), factory);
+    }
+
+    // Getters return a new instance each time:
+    public BinaryOperation getBinaryOperation(String name) {
+        Supplier<BinaryOperation> factory = binaryOps.get(name.toLowerCase());
+        return factory != null ? factory.get() : null;
+    }
+
+    public UnaryOperation getUnaryOperation(String name) {
+        Supplier<UnaryOperation> factory = unaryOps.get(name.toLowerCase());
+        return factory != null ? factory.get() : null;
+    }
+
+    public UnaryScalarOperation getUnaryScalarOperation(String name) {
+        Supplier<UnaryScalarOperation> factory = scalarOps.get(name.toLowerCase());
+        return factory != null ? factory.get() : null;
     }
 }
