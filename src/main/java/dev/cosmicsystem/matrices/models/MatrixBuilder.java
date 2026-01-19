@@ -3,14 +3,11 @@ package dev.cosmicsystem.matrices.models;
 import dev.cosmicsystem.matrices.utils.MatrixValidator;
 
 import java.util.Arrays;
-import java.util.Random;
 
 public class MatrixBuilder {
     private int rows = -1;
     private int cols = -1;
     private double[][] data;
-
-    private static final Random RANDOM = new Random();
 
     public MatrixBuilder() { }
 
