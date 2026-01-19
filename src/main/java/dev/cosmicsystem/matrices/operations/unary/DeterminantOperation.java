@@ -2,7 +2,7 @@ package dev.cosmicsystem.matrices.operations.unary;
 
 import dev.cosmicsystem.matrices.models.Matrix;
 
-public class DeterminantOperation implements BaseUnaryOperation {
+public class DeterminantOperation implements UnaryOperation {
 
     @Override
     public Matrix apply(Matrix m) {

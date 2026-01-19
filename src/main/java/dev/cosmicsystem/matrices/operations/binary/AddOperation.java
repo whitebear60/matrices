@@ -3,7 +3,7 @@ package dev.cosmicsystem.matrices.operations.binary;
 import dev.cosmicsystem.matrices.models.Matrix;
 import dev.cosmicsystem.matrices.models.MatrixBuilder;
 
-public class AddOperation implements BaseBinaryOperation {
+public class AddOperation implements BinaryOperation {
     @Override
     public Matrix apply(Matrix a, Matrix b) {
         if (a.getRows() != b.getRows() || a.getCols() != b.getCols()) {

@@ -2,10 +2,10 @@ package dev.cosmicsystem.matrices;
 
 import dev.cosmicsystem.matrices.io.MatrixPrinter;
 import dev.cosmicsystem.matrices.models.Matrix;
-import dev.cosmicsystem.matrices.operations.binary.BaseBinaryOperation;
+import dev.cosmicsystem.matrices.operations.binary.BinaryOperation;
 import dev.cosmicsystem.matrices.operations.factory.OperationSelector;
 import dev.cosmicsystem.matrices.operations.factory.OperationType;
-import dev.cosmicsystem.matrices.operations.unary.BaseUnaryOperation;
+import dev.cosmicsystem.matrices.operations.unary.UnaryOperation;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,8 +20,8 @@ public class Main {
 
         MatrixPrinter printer = new MatrixPrinter(System.out);
 
-        BaseBinaryOperation add = OperationSelector.selectBinary(OperationType.ADD);
-        BaseBinaryOperation multiply = OperationSelector.selectBinary(OperationType.MULTIPLY);
+        BinaryOperation add = OperationSelector.selectBinary(OperationType.ADD);
+        BinaryOperation multiply = OperationSelector.selectBinary(OperationType.MULTIPLY);
 
         System.out.println("Matrix A:");
         printer.print(A);
@@ -35,7 +35,7 @@ public class Main {
         System.out.println("\nA × B:");
         printer.print(multiply.apply(A, B));
 
-        BaseUnaryOperation transpose = OperationSelector.selectUnary(OperationType.TRANSPOSE);
+        UnaryOperation transpose = OperationSelector.selectUnary(OperationType.TRANSPOSE);
         System.out.println("\nTranspose of A:");
         printer.print(transpose.apply(A));
     }
