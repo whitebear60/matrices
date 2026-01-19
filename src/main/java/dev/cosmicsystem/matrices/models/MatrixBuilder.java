@@ -1,5 +1,7 @@
 package dev.cosmicsystem.matrices.models;
 
+import dev.cosmicsystem.matrices.utils.MatrixValidator;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -23,6 +25,7 @@ public class MatrixBuilder {
     }
 
     public MatrixBuilder data(double[][] data) {
+        MatrixValidator.validateRectangular(data);
         if (data == null || data.length == 0 || data[0].length == 0) {
             throw new IllegalArgumentException("Invalid data array");
         }
