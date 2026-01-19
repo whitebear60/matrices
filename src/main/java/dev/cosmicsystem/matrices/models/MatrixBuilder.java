@@ -1,8 +1,5 @@
 package dev.cosmicsystem.matrices.models;
 
-import dev.cosmicsystem.matrices.io.MatrixLoader;
-
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -113,10 +110,6 @@ public class MatrixBuilder {
             }
         }
         return this;
-    }
-
-    public Matrix fromCSV(String path) throws IOException {
-        return MatrixLoader.fromCSV(path);
     }
 
     public Matrix build() {
