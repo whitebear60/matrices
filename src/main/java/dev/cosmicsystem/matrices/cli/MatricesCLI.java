@@ -2,15 +2,26 @@ package dev.cosmicsystem.matrices.cli;
 
 import java.util.Scanner;
 
+/**
+ * Command-line interface for matrix operations.
+ */
 public class MatricesCLI {
     private final Scanner scanner;
     private final MatrixController controller;
 
+    /**
+     * Constructor.
+     * @param controller Matrix controller.
+     * @param scanner Scanner for user input.
+     */
     public MatricesCLI(MatrixController controller, Scanner scanner) {
         this.controller = controller;
         this.scanner = scanner;
     }
 
+    /**
+     * Runs the CLI.
+     */
     public void run() {
         while (true) {
             printMenu();
@@ -27,6 +38,9 @@ public class MatricesCLI {
         }
     }
 
+    /**
+     * Prints the CLI menu.
+     */
     private void printMenu() {
         System.out.println("\n[ Matrices CLI ]");
         System.out.println("1. Load matrix (A or B) from CSV");
@@ -38,6 +52,9 @@ public class MatricesCLI {
         System.out.print("Select option: ");
     }
 
+    /**
+     * Loads a matrix from a CSV file.
+     */
     private void loadMatrix() {
         System.out.print("Target matrix (A/B): ");
         String target = scanner.nextLine();
@@ -47,10 +64,13 @@ public class MatricesCLI {
         System.out.println(success ? "Matrix " + target + " loaded." : "Load failed.");
     }
 
+    /**
+     * Builds a matrix of the specified type.
+     */
     private void buildMatrix() {
         System.out.print("Target matrix (A/B): ");
         String target = scanner.nextLine();
-        System.out.println("Type (zero/ones/identity/random): ");
+        System.out.print("Type (zero/ones/identity/random): ");
         String type = scanner.nextLine();
         System.out.print("Rows: ");
         int rows = Integer.parseInt(scanner.nextLine());
@@ -60,12 +80,18 @@ public class MatricesCLI {
         System.out.println(success ? "Matrix " + target + " built." : "Build failed.");
     }
 
+    /**
+     * Displays the specified matrix.
+     */
     private void displayMatrix() {
         System.out.print("Which matrix to display (A/B): ");
         String target = scanner.nextLine();
         controller.displayMatrix(target);
     }
 
+    /**
+     * Applies a unary operation to the specified matrix.
+     */
     private void applyUnaryOperation() {
         System.out.println("Operation (transpose/determinant): ");
         String op = scanner.nextLine().toLowerCase();
@@ -75,6 +101,9 @@ public class MatricesCLI {
         System.out.println(success ? "Operation complete." : "Operation failed.");
     }
 
+    /**
+     * Applies a binary operation to the matrices A and B.
+     */
     private void applyBinaryOperation() {
         System.out.println("Binary Operation (add/subtract/multiply, using A and B): ");
         String op = scanner.nextLine().toLowerCase();

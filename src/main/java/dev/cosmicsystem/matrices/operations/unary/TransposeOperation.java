@@ -3,7 +3,16 @@ package dev.cosmicsystem.matrices.operations.unary;
 import dev.cosmicsystem.matrices.models.Matrix;
 import dev.cosmicsystem.matrices.models.MatrixBuilder;
 
+/**
+ * Represents the transpose operation for matrices.
+ */
 public class TransposeOperation implements UnaryOperation {
+    /**
+     * Transposes a matrix.
+     * @param m matrix to transpose
+     * @return transposed matrix
+     * @throws IllegalArgumentException if matrix is null
+     */
     @Override
     public Matrix apply(Matrix m) {
 

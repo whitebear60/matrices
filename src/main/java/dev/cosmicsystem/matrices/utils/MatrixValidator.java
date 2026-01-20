@@ -1,9 +1,17 @@
 package dev.cosmicsystem.matrices.utils;
 
+/**
+ * Utility class for validating matrix data.
+ */
 public final class MatrixValidator {
     private MatrixValidator() {}
 
-    public static void validateRectangular(double[][] data) {
+    /**
+     * Validates that the given matrix data is rectangular (all rows have the same number of columns).
+     * @param data matrix data
+     * @throws IllegalArgumentException if matrix data is null, has no rows, has no columns, or rows have inconsistent column counts
+     */
+    public static void validateRectangular(double[][] data) throws IllegalArgumentException {
         if (data == null)
             throw new IllegalArgumentException("Matrix data cannot be null");
         if (data.length == 0)

@@ -13,6 +13,9 @@ import dev.cosmicsystem.matrices.operations.unary.UnaryScalarOperation;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Manages matrix operations and interactions with the user.
+ */
 public class MatrixController {
     private Matrix matrixA;
     private Matrix matrixB;
@@ -20,20 +23,41 @@ public class MatrixController {
     private final OperationRegistry registry;
     private final Random rng;
 
+    /**
+     * Constructor.
+     * @param printer Matrix printer.
+     * @param registry Operation registry.
+     * @param rng Random number generator.
+     */
     public MatrixController(MatrixPrinter printer, OperationRegistry registry, Random rng) {
         this.printer = printer;
         this.registry = registry;
         this.rng = rng;
     }
 
+    /**
+     * Constructor with a default random number generator.
+     * @param printer Matrix printer.
+     * @param registry Operation registry.
+     */
     public MatrixController(MatrixPrinter printer, OperationRegistry registry) {
         this(printer, registry, new Random());
     }
 
+    /**
+     * Constructor with a default printer and random number generator.
+     * @param registry Operation registry.
+     */
     public MatrixController(OperationRegistry registry) {
-        this(new MatrixPrinter(System.out), registry, new Random());
+        this(new MatrixPrinter(System.out), registry);
     }
 
+    /**
+     * Loads a matrix from a CSV file.
+     * @param target target matrix (A/B)
+     * @param path CSV file path
+     * @return true if successful, false otherwise
+     */
     public boolean loadMatrixFromCsv(String target, String path) {
         try {
             MatrixSource source = new CsvMatrixSource(path);
@@ -50,6 +74,15 @@ public class MatrixController {
         }
     }
 
+    /**
+     * Builds a matrix based on user input.
+     * @param target target matrix (A/B)
+     * @param type matrix type (zero/ones/identity/random)
+     * @param rows number of rows
+     * @param cols number of columns
+     * @param scanner user input scanner
+     * @return true if successful, false otherwise
+     */
     public boolean buildMatrix(String target, String type, int rows, int cols, Scanner scanner) {
         try {
             Matrix result;
@@ -79,6 +112,10 @@ public class MatrixController {
         }
     }
 
+    /**
+     * Displays the matrix on the console.
+     * @param target target matrix (A/B)
+     */
     public void displayMatrix(String target) {
         Matrix m = "A".equalsIgnoreCase(target) ? matrixA : matrixB;
         if (m == null) {
@@ -88,6 +125,12 @@ public class MatrixController {
         printer.print(m);
     }
 
+    /**
+     * Applies a unary operation to a matrix.
+     * @param op operation name
+     * @param target target matrix (A/B)
+     * @return true if successful, false otherwise
+     */
     public boolean applyUnaryOperation(String op, String target) {
         try {
             Matrix m = "A".equalsIgnoreCase(target) ? matrixA : matrixB;
@@ -107,6 +150,11 @@ public class MatrixController {
         }
     }
 
+    /**
+     * Applies a binary operation to two matrices.
+     * @param op operation name
+     * @return true if successful, false otherwise
+     */
     public boolean applyBinaryOperation(String op) {
         try {
             if (matrixA == null || matrixB == null) {

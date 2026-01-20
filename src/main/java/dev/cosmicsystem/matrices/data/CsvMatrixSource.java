@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a source of matrices from a CSV file.
+ */
 public class CsvMatrixSource implements MatrixSource{
     private final String filePath;
 
@@ -15,6 +18,11 @@ public class CsvMatrixSource implements MatrixSource{
         this.filePath = filePath;
     }
 
+    /**
+     * Loads a matrix from a CSV file.
+     * @return the loaded matrix
+     * @throws IOException if an error occurs while reading the file
+     */
     @Override
     public Matrix load() throws IOException {
         List<double[]> rows = new ArrayList<>();
