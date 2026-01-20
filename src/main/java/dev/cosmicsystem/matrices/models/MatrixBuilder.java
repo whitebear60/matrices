@@ -1,5 +1,6 @@
 package dev.cosmicsystem.matrices.models;
 
+import dev.cosmicsystem.matrices.utils.DefaultMatrixValidator;
 import dev.cosmicsystem.matrices.utils.MatrixValidator;
 
 import java.util.Arrays;
@@ -11,11 +12,18 @@ public class MatrixBuilder {
     private int rows = -1;
     private int cols = -1;
     private double[][] data;
+    private final MatrixValidator validator;
 
     /**
      * Default constructor.
      */
-    public MatrixBuilder() { }
+    public MatrixBuilder() {
+        this(new DefaultMatrixValidator());
+    }
+
+    public MatrixBuilder(MatrixValidator validator) {
+        this.validator = validator;
+    }
 
     /**
      * Sets the number of rows in the matrix.
@@ -43,7 +51,7 @@ public class MatrixBuilder {
      * @return this builder for chaining
      */
     public MatrixBuilder data(double[][] data) {
-        MatrixValidator.validateRectangular(data);
+        validator.validateRectangular(data);
         if (data == null || data.length == 0 || data[0].length == 0) {
             throw new IllegalArgumentException("Invalid data array");
         }
@@ -84,6 +92,6 @@ public class MatrixBuilder {
             }
             data = new double[rows][cols];
         }
-        return new Matrix(data);
+        return new Matrix(data, validator);
     }
 }

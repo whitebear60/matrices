@@ -1,5 +1,6 @@
 package dev.cosmicsystem.matrices.models;
 
+import dev.cosmicsystem.matrices.utils.DefaultMatrixValidator;
 import dev.cosmicsystem.matrices.utils.MatrixValidator;
 
 import java.util.Arrays;
@@ -35,8 +36,10 @@ public final class Matrix {
      * @param data rectangular array of matrix values. Must not be null or jagged.
      * @throws IllegalArgumentException if data is null or matrix is not rectangular
      */
-    Matrix(double[][] data) {
-        MatrixValidator.validateRectangular(data);
+    Matrix(double[][] data, MatrixValidator validator) {
+        Objects.requireNonNull(data, "Matrix data cannot be null");
+        Objects.requireNonNull(validator, "Matrix validator cannot be null");
+        validator.validateRectangular(data);
         this.rows = data.length;
         this.cols = data[0].length;
         this.data = Arrays.stream(data)
@@ -44,6 +47,9 @@ public final class Matrix {
                 .toArray(double[][]::new);
     }
 
+    public static Matrix of(double[][] data) {
+        return new Matrix(data, new DefaultMatrixValidator());
+    }
     /**
      * Returns the number of rows in the matrix.
      *
